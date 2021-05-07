@@ -79,20 +79,30 @@ function App() {
         setTasks({...tasks}); //удаляются таски удалённого todolist из стейта
     }
         function addTodolist(title: string) {
+
             const todolistId = v1()
             const todolist: TodolistType = {
-                id: v1(), filter: "all", title};
+                id: todolistId, title, filter: "all"};
             setTodolists([todolist, ...todolists]);
             setTasks({...tasks, [todolistId]: []})
         }
 
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
+        debugger
         let tasks_ = tasks[todolistId]
         let task = tasks_.find(t => t.id === taskId) //нашли кликнутую таску
         if (task) {
             task.title = newTitle;
         }
         setTasks({...tasks});
+    }
+
+    function changeTodolistTitle (id: string, newTitle: string) {
+        const todolist = todolists.find(tl => tl.id===id);
+        if(todolist){
+            todolist.title = newTitle;
+            setTodolists([...todolists])
+        }
     }
 
 
@@ -121,6 +131,7 @@ function App() {
                         filter={tl.filter}
                         removeTodolist={removeTodolist}
                         changeTaskTitle={changeTaskTitle}
+                        changeTodolistTitle={changeTodolistTitle}
                     />
                 })
             }
