@@ -25,17 +25,20 @@ export type ChangeTodolistFilterActionType = {
 
 type ActionsType = RemoveTodolistActionType|AddTodolistActionType|ChangeTodolistActionType|ChangeTodolistFilterActionType
 
-export const todolistsReducer = (state: Array<TodolistType>, action: ActionsType): Array<TodolistType> =>{
+
+const initialState: Array<TodolistType> = []
+
+export const todolistsReducer = (state: Array<TodolistType>=initialState, action: ActionsType): Array<TodolistType> =>{
     switch(action.type) {
         case "REMOVE-TODOLIST":{
             return state.filter(tl => tl.id !== action.id)
         }
         case "ADD-TODOLIST":{
-            return [...state, {
+            return [{
                 id: action.todolistId,
                 title: action.title,
                 filter: "all"
-            }]
+            }, ...state]
         }
         case "CHANGE-TODOLIST-TITLE": {
             const todolist = state.find(tl => tl.id ===action.id);
@@ -46,13 +49,13 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionsType
         }
 
         case "CHANGE-TODOLIST-FILTER": {
-            const todolist = state.find(tl => tl.id ===action.id);
+            const todolist = state.find(tl => tl.id === action.id);
             if (todolist) {
                 todolist.filter = action.filter;
             }
             return [ ...state]
         }
-        default: throw new Error("I don't understand action type")
+        default: return state
     }
 }
 
