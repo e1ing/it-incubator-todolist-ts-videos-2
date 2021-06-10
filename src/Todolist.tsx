@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -23,21 +23,17 @@ type PropsType = {
     changeTodolistTitle: (id: string, newTitle: string) => void
 }
 
-export function Todolist(props: PropsType) {
+export const Todolist = React.memo ((props: PropsType)=> {
     const tasks =useSelector<AppRootState, Array<TaskType>>(state => state.tasks[props.id]) || []
     const dispatch = useDispatch();
 
 
-    const onAllClickHandler = () => props.changeFilter(props.id, "all" )
-    const onActiveClickHandler = () => props.changeFilter(props.id, "active" )
-    const onCompletedClickHandler = () => props.changeFilter( props.id, "completed")
+    const onAllClickHandler = useCallback(() => props.changeFilter(props.id, "all" ),[props.changeFilter, props.id])
+    const onActiveClickHandler = useCallback(() => props.changeFilter(props.id, "active" ),[props.changeFilter, props.id])
+    const onCompletedClickHandler = useCallback(() => props.changeFilter( props.id, "completed"),[ props.changeFilter,props.id,])
 
-    const removeTodolist = () => {
-        props.removeTodolist(props.id)
-    }
-    const changeTodolistTitle = (newTitle: string) => {
-        props.changeTodolistTitle(props.id, newTitle)
-    }
+    const removeTodolist = useCallback(() => {props.removeTodolist(props.id)}, [props.removeTodolist, props.id])
+    const changeTodolistTitle = useCallback ((newTitle: string) => {props.changeTodolistTitle(props.id, newTitle)}, [props.changeTodolistTitle, props.id])
 
     let allTodolistTasks = tasks;
     let tasksForTodolist=allTodolistTasks;
@@ -101,7 +97,7 @@ export function Todolist(props: PropsType) {
             </div>
         </div>
     );
-}
+})
 
 
 
