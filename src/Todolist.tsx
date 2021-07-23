@@ -7,6 +7,7 @@ import {Delete} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {Task} from "./Task";
 
 export type TaskType = {
     id: string
@@ -59,25 +60,14 @@ export const Todolist = React.memo ((props: PropsType)=> {
             <div>
                 {
                     tasksForTodolist.map(t => {
-                        const onRemoveHandler = () => {
-                            dispatch (removeTaskAC(t.id, props.id));
-                        }
-                        const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                            dispatch(changeTaskStatusAC(t.id, e.currentTarget.checked,  props.id))
-
-                        }
-                        const onChangeTitleHandler = (newValue: string) => {
-                            dispatch(changeTaskTitleAC(t.id, newValue, props.id))
-                        }
-
-                        return <div /*className={t.isDone ? "is-done" : ""} key={t.id}*/>
-                            <Checkbox
-                                   checked={t.isDone}
-                                   onChange={onChangeCheckboxHandler}
-                            />
-                            <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
-                            <IconButton onClick={onRemoveHandler}><Delete/></IconButton>
-                        </div>
+                       <Task
+                           task={t}
+                           todolistId={props.todolistId}
+                           changeTaskTitle={props.changeTaskTitle}
+                           changeTaskStatus={props.changeTaskStatus}
+                           removeTask={props.removeTask}
+                           key={t.id}
+                       />
                     })
                 }
             </div>
