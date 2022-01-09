@@ -19,7 +19,7 @@ export type TasksStateType = {
 
 function App() {
 
-    let todolistId1 = v1();
+   /* let todolistId1 = v1();
     let todolistId2 = v1();
 
     let [todolists, setTodolists] = useState<Array<TodolistType>>([
@@ -43,7 +43,7 @@ function App() {
 
     function removeTask(id: string, todolistId: string) {
         let tasks_ = tasks[todolistId]
-        let newTasks = tasks_.filter(t => t.id !== id);
+        let newTasks = tasks_.filter(t => t.taskId !== id);
         tasks[todolistId] = newTasks;
         setTasks({...tasks});
     }
@@ -58,7 +58,7 @@ function App() {
 
     function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
         let tasks_ = tasks[todolistId]
-        let task = tasks_.find(t => t.id === taskId) //нашли кликнутую таску
+        let task = tasks_.find(t => t.taskId === taskId) //нашли кликнутую таску
         if (task) {
             task.isDone = isDone;
         }
@@ -94,7 +94,7 @@ function App() {
     function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
         debugger
         let tasks_ = tasks[todolistId]
-        let task = tasks_.find(t => t.id === taskId) //нашли кликнутую таску
+        let task = tasks_.find(t => t.taskId === taskId) //нашли кликнутую таску
         if (task) {
             task.title = newTitle;
         }
@@ -113,7 +113,6 @@ function App() {
     return (
         <div className="App">
             <AppBar position="static">
-
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuItem/>
@@ -142,18 +141,17 @@ function App() {
                             return <Grid item>
                                 <Paper style={{padding:"10px"}}>
                                 <Todolist
-                                    key={tl.id}
-                                    id={tl.id}
+                                    key={tl.todolistId}
+                                    todolistId={tl.todolistId}
                                     title={tl.title}
-
-
                                     changeFilter={changeFilter}
-
-
                                     filter={tl.filter}
                                     removeTodolist={removeTodolist}
-
                                     changeTodolistTitle={changeTodolistTitle}
+                                    removeTask={removeTask}
+                                    addTask={addTask}
+                                    changeTaskStatus={changeTaskStatus}
+                                    changeTaskTitle={ChangeTaskTitle}
                                 />
                                 </Paper>
                             </Grid>
@@ -163,7 +161,7 @@ function App() {
             </Container>
 
         </div>
-    )
+    )*/
 }
 
 export default App;

@@ -1,8 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
 
-type AddItemFormPropsType ={
+type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
@@ -16,12 +16,12 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (error!==null){
+        if (error !== null) {
             setError(null);
         }
         if (e.key === "Enter") {
             if (taskTitle.trim() !== "") {
-                props.addItem(taskTitle.trim(), )
+                props.addItem(taskTitle.trim(),)
                 setTaskTitle("")
             } else {
                 setError("Title is required")
@@ -48,7 +48,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             onKeyPress={onKeyPressHandler}
         />
         <IconButton
-                color={'primary'}
-                onClick={addItemHandler}><ControlPoint/></IconButton>
+            color={'primary'}
+            onClick={addItemHandler}><ControlPoint/></IconButton>
     </div>
 });

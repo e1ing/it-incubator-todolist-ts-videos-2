@@ -39,11 +39,11 @@ export const tasksReducer = (state: TasksStateType=initialState, action: Actions
         case "REMOVE-TASK":
             return {
                 ...state,
-                [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)
+                [action.todolistId]: state[action.todolistId].filter(t => t.taskId !== action.taskId)
             }
         case "ADD-TASK":
             const newTask: TaskType = {
-                id: v1(),
+                taskId: v1(),
                 title: action.title,
                 isDone: false
             };
@@ -54,7 +54,7 @@ export const tasksReducer = (state: TasksStateType=initialState, action: Actions
         case "CHANGE-TASK-STATUS": {
             let todolistTasks=state[action.todolistId];
             state[action.todolistId]=todolistTasks.map(t=>
-            t.id===action.taskId
+            t.taskId===action.taskId
             ? {...t, isDone: action.isDone}:t);
             return({...state});
         }
@@ -62,7 +62,7 @@ export const tasksReducer = (state: TasksStateType=initialState, action: Actions
         case "CHANGE-TASK-TITLE": {
             let todolistTasks=state[action.todolistId];
             state[action.todolistId]=todolistTasks.map(t=>
-                t.id===action.taskId
+                t.taskId===action.taskId
                     ? {...t, title: action.title}:t);
             return({...state});
         }

@@ -27,7 +27,7 @@ export type TasksStateType = {
 }
 
 function AppWithReducers() {
-    let todolistId1 = v1();
+   /* let todolistId1 = v1();
     let todolistId2 = v1();
 
     let [todolists, dispatchToTodolistsReducer] = useReducer(todolistsReducer, [
@@ -118,7 +118,7 @@ function AppWithReducers() {
                                 <Paper style={{padding:"10px"}}>
                                 <Todolist
                                     key={tl.id}
-                                    id={tl.id}
+                                    todolistId={tl.id}
                                     title={tl.title}
 
 
@@ -138,7 +138,7 @@ function AppWithReducers() {
             </Container>
 
         </div>
-    )
+    )*/
 }
 
 export default AppWithReducers;
