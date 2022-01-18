@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import {AppBar, Button, Container, IconButton, Toolbar, Typography} from '@material-ui/core'
+import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from '@material-ui/core'
 import {Menu} from '@material-ui/icons'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 
@@ -18,6 +18,7 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                <LinearProgress/>
             </AppBar>
             <Container fixed>
                 <TodolistsList/>
