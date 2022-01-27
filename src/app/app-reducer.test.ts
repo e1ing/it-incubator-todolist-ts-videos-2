@@ -1,4 +1,4 @@
-import {AppInitialStateType, appReducer} from "./app-reducer";
+import {AppInitialStateType, appReducer, setErrorAC} from "./app-reducer";
 
 let startState: AppInitialStateType;
 
@@ -10,7 +10,7 @@ beforeEach(() => {
 })
 
 test('correct error message should be set', () => {
-    const endState = appReducer(startState, setErrorAC("some error"))
+    const endState = appReducer(startState, setErrorAC("loading"))
 
-    expect(endState.error).toBe("some error");
+    expect(endState.error).toBe("loading");
 })
