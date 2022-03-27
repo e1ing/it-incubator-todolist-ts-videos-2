@@ -20,7 +20,7 @@ export type TodolistDomainType = TodolistType & {
     entityStatus: RequestStatusType
 }
 
-type ThunkDispatchType = Dispatch<ActionsType | SetStatusAT>
+ type ThunkDispatchType = Dispatch<ActionsType | SetStatusAT>
 
 const initialState: Array<TodolistDomainType> = []
 
