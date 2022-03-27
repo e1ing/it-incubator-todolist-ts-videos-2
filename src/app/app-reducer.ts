@@ -12,7 +12,7 @@ const initialState: AppInitialStateType ={
 
 export type SetErrorAT = ReturnType<typeof setErrorAC>
 export type SetStatusAT = ReturnType<typeof setStatusAC>
-type AppActionType = SetErrorAT|SetStatusAT
+export type AppActionType = SetErrorAT|SetStatusAT
 
 
 export const appReducer = (state:AppInitialStateType=initialState, action: AppActionType):AppInitialStateType => {
