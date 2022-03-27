@@ -8,6 +8,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import {useDispatch} from "react-redux";
+import {loginTC} from "./login-reducer";
 
 export const Login = () => {
     const dispatch = useDispatch()
