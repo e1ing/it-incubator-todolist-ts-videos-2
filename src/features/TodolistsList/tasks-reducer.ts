@@ -135,7 +135,7 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
                 }
             })
             .catch(error => {
-                handleServerNetworkError(error)
+                handleServerNetworkError(error, dispatch)
             })
     }
 
