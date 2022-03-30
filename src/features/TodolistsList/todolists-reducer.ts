@@ -1,8 +1,9 @@
 import {todolistsAPI, TodolistType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
-import {RequestStatusType, setStatusAC, SetStatusAT} from "../../app/app-reducer";
+import {RequestStatusType, setErrorAC, setStatusAC, SetStatusAT} from "../../app/app-reducer";
 import {AppActionsTypes, AppRootStateType, AppThunk} from "../../app/store";
 import { ThunkAction } from 'redux-thunk';
+import {handleServerNetworkError} from "../../utils/error-utils";
 
 
 // types
@@ -66,9 +67,14 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-T
 // thunks
 export const fetchTodolistsTC = ():AppThunk => async dispatch => {
         dispatch(setStatusAC('loading'))
-       const res = await todolistsAPI.getTodolists()
-                dispatch(setTodolistsAC(res.data))
-                dispatch(setStatusAC('succeeded'))
+    try {
+        const res = await todolistsAPI.getTodolists()
+        dispatch(setTodolistsAC(res.data))
+        dispatch(setStatusAC('succeeded'))
+    }
+    catch (error){
+        handleServerNetworkError(error, dispatch)
+    }
 }
 export const removeTodolistTC = (todolistId: string):AppThunk => async dispatch => {
        const res = await todolistsAPI.deleteTodolist(todolistId)

@@ -5,10 +5,10 @@ import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
-import Grid from '@mui/material/Grid';
+import {Grid, Button} from '@material-ui/core';
 import TextField from '@mui/material/TextField';
 import {useDispatch} from "react-redux";
-import {loginTC} from "./login-reducer";
+import {loginTC} from "./auth-reducer";
 
 export const Login = () => {
     const dispatch = useDispatch()
@@ -33,15 +33,24 @@ export const Login = () => {
         },
         onSubmit: values => {
             dispatch(loginTC(values))
+            formik.resetForm();
         },
     });
 
     return (
-        <Grid container>
+        <Grid container justify={"center"}>
             <Grid item xs={4}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
                         <FormLabel>
+                            <p>To log in get registered
+                                <a href={'https://social-network.samuraijs.com/'}
+                                   target={'_blank'}>here
+                                </a>
+                            </p>
+                            <p>or use common test account credentials:</p>
+                            <p>Email: free@samuraijs.com</p>
+                            <p>Password: free</p>
                             <FormGroup>
                                 <TextField
                                     label={"Email"}
@@ -58,12 +67,12 @@ export const Login = () => {
                                 {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                                 <FormControlLabel
                                     label={"Remember me"}
-                                    control={<Checkbox
-                                        checked={formik.values.rememberMe}
-                                        {...formik.getFieldProps('email')}
-                                    />}
-
+                                    control={<Checkbox/>}
+                                    checked={formik.values.rememberMe}
+                                    {...formik.getFieldProps('rememberMe')}
                                 />
+                                <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
+
                             </FormGroup>
                         </FormLabel>
                     </FormControl>
