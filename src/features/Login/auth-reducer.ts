@@ -1,7 +1,7 @@
 import {AppThunk} from "../../app/store";
 import {authAPI, LoginParamsType} from "../../api/todolists-api";
 import {handleServerAppError} from "../../utils/error-utils";
-import {AppActionType, setStatusAC} from "../../app/app-reducer";
+import {AppActionType, setAppStatusAC} from "../../app/app-reducer";
 
 
 const initialState: InitialStateType = {
@@ -22,15 +22,16 @@ export const authReducer = (state = initialState, action: AuthActionType): Initi
     }
 }
 
-const setIsLoggedInAC = (value: boolean) => ({type: "login/SET_IS-LOGGED_IN", value} as const)
+export const setIsLoggedInAC = (value: boolean) => ({type: "login/SET_IS-LOGGED_IN", value} as const)
 
 export const loginTC = (data: LoginParamsType):AppThunk => (dispatch) =>{
-    dispatch(setStatusAC('loading'))
+    debugger
+    dispatch(setAppStatusAC('loading'))
         authAPI.login(data)
             .then (res => {
                 if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedInAC(true))
-                    dispatch(setStatusAC('succeeded'))
+                    dispatch(setAppStatusAC('succeeded'))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
@@ -38,4 +39,21 @@ export const loginTC = (data: LoginParamsType):AppThunk => (dispatch) =>{
             .catch ((error) => {
                 handleServerAppError(error, dispatch)
             })
+}
+
+export const logoutTC = (): AppThunk => async dispatch  => {
+    dispatch(setAppStatusAC('loading'))
+    try{
+        const res = await authAPI.logout()
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(false))
+            dispatch(setAppStatusAC('succeeded'))
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    }
+  catch (error) {
+      const res = await authAPI.logout()
+      handleServerAppError(res.data, dispatch)
+  }
 }
