@@ -1,7 +1,7 @@
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from './todolists-reducer'
 import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
-import {AppRootStateType, AppThunk} from '../../app/store'
+import {AppRootStateType} from '../../app/store'
 import {setAppErrorAC, setAppStatusAC} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
@@ -28,7 +28,6 @@ export type TasksActionsType =
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
 
-type ThunkDispatchType = Dispatch<TasksActionsType | SetStatusAT| SetErrorAT>
 
 export const tasksReducer = (state: TasksStateType = initialState, action: TasksActionsType): TasksStateType => {
     switch (action.type) {
@@ -73,18 +72,18 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
     ({type: 'SET-TASKS', tasks, todolistId} as const)
 
 // thunks
-export const fetchTasksTC = (todolistId: string):AppThunk => async dispatch => {
+export const fetchTasksTC = (todolistId: string) => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
    const res = await todolistsAPI.getTasks(todolistId)
             dispatch(setTasksAC(res.data.items, todolistId))
             dispatch(setAppStatusAC({status: 'succeeded'}))
 }
-export const removeTaskTC = (taskId: string, todolistId: string):AppThunk => async dispatch => {
+export const removeTaskTC = (taskId: string, todolistId: string) => async( dispatch: Dispatch )=> {
     const res = await todolistsAPI.deleteTask(todolistId, taskId)
             const action = removeTaskAC(taskId, todolistId)
             dispatch(action)
 }
-export const addTaskTC = (title: string, todolistId: string):AppThunk => async dispatch => {
+export const addTaskTC = (title: string, todolistId: string) => async (dispatch: Dispatch)=> {
     dispatch(setAppStatusAC({status: 'loading'}))
     try {
         const res = await todolistsAPI.createTask(todolistId, title)

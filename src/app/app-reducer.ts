@@ -1,7 +1,7 @@
-import {AppThunk} from "./store";
 import {authAPI} from "../api/todolists-api";
 import {setIsLoggedInAC} from "../features/Login/auth-reducer";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Dispatch} from "redux";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -29,7 +29,7 @@ const slice = createSlice({
 
 export const {setAppErrorAC, setAppStatusAC,setAppIsInitializedAC} = slice.actions;
 
-export const initializedAppTC = (): AppThunk => async dispatch => {
+export const initializedAppTC = () => async (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
     const res = await authAPI.me()
     if (res.data.resultCode===0){

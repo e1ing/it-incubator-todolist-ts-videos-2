@@ -1,4 +1,3 @@
-import {AppThunk} from "../../app/store";
 import {authAPI, LoginParamsType} from "../../api/todolists-api";
 import {handleServerAppError} from "../../utils/error-utils";
 import {setAppStatusAC} from "../../app/app-reducer";
