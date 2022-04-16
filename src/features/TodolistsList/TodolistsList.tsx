@@ -47,12 +47,11 @@ console.log(isLoggedIn)
     }, [])
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
-        const thunk = updateTaskTC(id, {status}, todolistId)
-        dispatch(thunk)
+        dispatch (updateTaskTC(id, todolistId, {status}))
     }, [])
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-        const thunk = updateTaskTC(id, {title: newTitle}, todolistId)
+        const thunk = updateTaskTC(id, todolistId, {title: newTitle})
         dispatch(thunk)
     }, [])
 

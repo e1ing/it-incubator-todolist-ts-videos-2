@@ -6,8 +6,8 @@ import {Dispatch} from "redux";
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
-    status: 'idle',
-    error: "Some error",
+    status: 'idle'  as RequestStatusType,
+    error: "Some error" as string|null,
     isInitialized: false
 }
 
@@ -26,7 +26,7 @@ const slice = createSlice({
         }
     }
 })
-
+export const appReducer = slice.reducer
 export const {setAppErrorAC, setAppStatusAC,setAppIsInitializedAC} = slice.actions;
 
 export const initializedAppTC = () => async (dispatch: Dispatch) => {

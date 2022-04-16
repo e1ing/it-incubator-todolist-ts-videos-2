@@ -52,7 +52,6 @@ export const logoutTC = () => async (dispatch: Dispatch)  => {
         }
     }
   catch (error) {
-      const res = await authAPI.logout()
-      handleServerAppError(res.data, dispatch)
+      handleServerAppError(error, dispatch)
   }
 }
