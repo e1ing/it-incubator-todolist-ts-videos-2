@@ -19,12 +19,10 @@ const slice = createSlice({
     }
 })
 
-
 export const authReducer =  slice.reducer;
 export const {setIsLoggedInAC} = slice.actions
 
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) =>{
-    debugger
     dispatch(setAppStatusAC({status: 'loading'}))
         authAPI.login(data)
             .then (res => {
