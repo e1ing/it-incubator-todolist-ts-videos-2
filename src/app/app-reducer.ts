@@ -39,4 +39,5 @@ export const initializedAppTC = () => async (dispatch: Dispatch) => {
 
     }
     dispatch(setAppIsInitializedAC({isInitialized: true}))
+    dispatch(setAppStatusAC({status: 'succeeded'}))
 }

@@ -6,13 +6,13 @@ export const handleServerAppError= <D> (data: ResponseType<D>, dispatch : Dispat
     if (data.messages.length) {
         dispatch(setAppErrorAC({error: data.messages[0]}));
     } else {
-        dispatch(setAppErrorAC({error: "Some error occcured"}))
+        dispatch(setAppErrorAC({error: "Some error occured"}))
     }
     dispatch(setAppStatusAC({status:'failed'}))
 
 }
 
 export const handleServerNetworkError = (error:{message: string}, dispatch : Dispatch) => {
-    dispatch(setAppErrorAC({error: error.message ? error.message: 'Some error occcured'}))
+    dispatch(setAppErrorAC({error: error.message ? error.message: 'Some error occured'}))
     dispatch(setAppStatusAC({status: 'failed'}))
 }

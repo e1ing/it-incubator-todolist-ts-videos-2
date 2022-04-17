@@ -91,8 +91,7 @@ export const addTaskTC = (title: string, todolistId: string) => async (dispatch:
             handleServerAppError(res.data, dispatch)
         }
     } catch (error) {
-        dispatch(setAppErrorAC(error.message))
-        dispatch(setAppStatusAC({status: 'failed'}))
+        handleServerNetworkError (error, dispatch)
     }
 }
 export const updateTaskTC = (taskId: string, todolistId: string, model: UpdateDomainTaskModelType, ) =>
