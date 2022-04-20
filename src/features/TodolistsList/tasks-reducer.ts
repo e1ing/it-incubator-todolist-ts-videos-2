@@ -21,21 +21,18 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', (todolistId: string, thunkAPI) => {
+export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
-    return todolistsAPI.getTasks(todolistId)
-        .then((res) => {
-            const tasks = res.data.items
-            //thunkAPI.dispatch(setTasksAC({tasks, todolistId}))
-            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
-            return {tasks, todolistId}
-        })
+    const res = await todolistsAPI.getTasks(todolistId);
+    const tasks = res.data.items
+    thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+    return {tasks, todolistId}
 })
 
-export const removeTaskTC = createAsyncThunk('tasks/removeTask', async(param: {taskId: string, todolistId: string}, thunkAPI) => {
+export const removeTaskTC = createAsyncThunk('tasks/removeTask', async (param: { taskId: string, todolistId: string }, thunkAPI) => {
     const res = await todolistsAPI.deleteTask(param.todolistId, param.taskId)
-    const action = removeTaskAC({taskId: param.taskId, todolistId: param.todolistId})
-    thunkAPI. dispatch(action)
+    const action = removeTaskTC({taskId: param.taskId, todolistId: param.todolistId})
+    return {taskId: param.taskId, todolistId: param.todolistId}
 })
 
 /*export const removeTaskTC_ = (taskId: string, todolistId: string) => async (dispatch: Dispatch) => {
@@ -84,12 +81,19 @@ const slice = createSlice({
         builder.addCase(fetchTasksTC.fulfilled, (state, action) => {
             state[action.payload.todolistId] = action.payload.tasks
         });
+        builder.addCase(removeTaskTC.fulfilled, (state, action) => {
+            const tasks = state[action.payload.todolistId]
+            const index = tasks.findIndex(tl => tl.id === action.payload.taskId)
+            if (index > -1) {
+                tasks.splice(index, 1)
+            }
+        });
     }
 })
 
 export const tasksReducer = slice.reducer
 
-export const {removeTaskAC, addTaskAC, updateTaskAC} = slice.actions
+export const {addTaskAC, updateTaskAC} = slice.actions
 
 
 // thunks
